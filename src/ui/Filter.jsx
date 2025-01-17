@@ -1,3 +1,6 @@
+import PropTypes from "prop-types";
+
+import { useSearchParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 const StyledFilter = styled.div`
@@ -10,6 +13,10 @@ const StyledFilter = styled.div`
   gap: 0.4rem;
 `;
 
+// const FilterButton = styled.button.attrs((props) => ({
+//   // This ensures `active` is not passed to the DOM element
+//   "aria-pressed": props.active, // Optional: You can use `aria-pressed` for accessibility
+// }))`
 const FilterButton = styled.button`
   background-color: var(--color-grey-0);
   border: none;
@@ -33,3 +40,40 @@ const FilterButton = styled.button`
     color: var(--color-brand-50);
   }
 `;
+
+export default function Filter({ filterField, options }) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentFilter = searchParams.get(filterField) || options.at(0).value;
+
+  function handleClick(value) {
+    searchParams.set(filterField, value);
+    setSearchParams(searchParams);
+  }
+
+  return (
+    <StyledFilter>
+      {options.map((option) => (
+        <FilterButton
+          key={option.value}
+          onClick={() => handleClick(option.value)}
+          active={option.value === currentFilter}
+          disabled={option.value === currentFilter}
+          // className={option.value === currentFilter ? "active" : ""}
+        >
+          {option.label}
+        </FilterButton>
+      ))}
+    </StyledFilter>
+  );
+}
+
+// Add prop types for validation
+Filter.propTypes = {
+  filterField: PropTypes.string.isRequired, // Must be a required string
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string.isRequired, // Each option must have a `value` string
+      label: PropTypes.string.isRequired, // Each option must have a `label` string
+    })
+  ).isRequired, // Must be an array and required
+};
