@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 const StyledCheckbox = styled.div`
   display: flex;
@@ -41,3 +42,11 @@ function Checkbox({ checked, onChange, disabled = false, id, children }) {
 }
 
 export default Checkbox;
+
+Checkbox.propTypes = {
+  checked: PropTypes.bool.isRequired, // Ensures the checkbox state (checked or unchecked) is passed as a boolean
+  onChange: PropTypes.func.isRequired, // Ensures an onChange function is passed
+  disabled: PropTypes.bool, // Optional prop, defaults to false if not provided
+  id: PropTypes.string.isRequired, // Ensures the 'id' is provided as a string for the checkbox
+  children: PropTypes.node.isRequired, // Ensures any content inside the checkbox component is passed
+};

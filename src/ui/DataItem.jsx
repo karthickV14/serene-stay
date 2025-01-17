@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 const StyledDataItem = styled.div`
   display: flex;
@@ -33,3 +34,9 @@ function DataItem({ icon, label, children }) {
 }
 
 export default DataItem;
+
+DataItem.propTypes = {
+  icon: PropTypes.node.isRequired, // for React elements like icons
+  label: PropTypes.string.isRequired, // for text labels
+  children: PropTypes.node.isRequired, // for any child components or elements inside the DataItem
+};
