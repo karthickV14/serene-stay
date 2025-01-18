@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const StyledStat = styled.div`
@@ -56,5 +57,13 @@ function Stat({ icon, title, value, color }) {
     </StyledStat>
   );
 }
+
+// Prop validation for Stat
+Stat.propTypes = {
+  icon: PropTypes.node.isRequired, // Must be a valid React node (e.g., JSX element, string, etc.) and required
+  title: PropTypes.string.isRequired, // Must be a string and required
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired, // Must be a string or number and required
+  color: PropTypes.string.isRequired, // Must be a string (e.g., "blue", "#fff") and required
+};
 
 export default Stat;
